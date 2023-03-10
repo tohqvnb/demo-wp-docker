@@ -1,0 +1,73 @@
+version: '2'
+services:
+  nginx:
+    build: ./nginx
+    container_name: wordpress_nginx
+    restart: always
+    volumes:
+      - .:/var/www/html/:rw
+      - ./nginx/conf/nginx.conf:/etc/nginx/conf/nginx.conf
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - front
+  php:
+    build: .
+    container_name: php
+    restart: always
+    volumes:
+      - .:/var/www/html:rw
+      - ./php/upload.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ./php/php.ini:/usr/local/etc/php/php.ini
+    # depends_on:
+    #   - db
+    # links:
+    #   - db
+    environment:
+      - MYSQL_ADDON_DB=wordpress
+      - MYSQL_ADDON_HOST=vnbooking-aurora-instance-1.csryvbpszspz.ap-southeast-1.rds.amazonaws.com
+      - MYSQL_ADDON_USER=admin
+      - MYSQL_ADDON_PASSWORD=Vnbooking2023
+      - AUTH_KEY=''
+      - SECURE_AUTH_KEY=''
+      - LOGGED_IN_KEY=''
+      - NONCE_KEY=''
+      - AUTH_SALT=''
+      - SECURE_AUTH_SALT=''
+      - LOGGED_IN_SALT=''
+      - NONCE_SALT=''
+    networks:
+      - front
+      - back
+  # db:
+  #   image: mariadb:10
+  #   container_name: wordpress_mariadb
+  #   restart: always
+  #   ports:
+  #     - 3306:3306
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=password
+  #   networks:
+  #     - back
+  # hub:
+  #   image: selenium/hub
+  #   container_name: wordpress_selenium-hub
+  #   ports:
+  #     - "4444:4444"
+  #   networks:
+  #     - back
+  # chrome:
+  #   container_name: selenium-chrome
+  #   image: selenium/node-chrome
+  #   restart: always
+  #   links:
+  #     - hub
+  #   environment:
+  #     - HUB_PORT_4444_TCP_ADDR=hub
+  #   networks:
+  #     - back
+networks:
+  front: 
+  back:
