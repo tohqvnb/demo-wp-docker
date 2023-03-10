@@ -8,6 +8,7 @@ services:
       - .:/var/www/html/:rw
       - ./nginx/conf/nginx.conf:/etc/nginx/conf/nginx.conf
       - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/fastcgi.conf:/etc/nginx/fastcgi.conf
     ports:
       - 80:80
       - 443:443
