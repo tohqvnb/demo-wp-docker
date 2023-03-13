@@ -19,6 +19,8 @@ services:
     image: wordpress:5.1.1-fpm-alpine
     container_name: php
     restart: always
+    ports:
+      - 9000:9000
     volumes:
       - .:/var/www/html:rw
       - ./php/upload.ini:/usr/local/etc/php/conf.d/uploads.ini
