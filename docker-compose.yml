@@ -11,7 +11,7 @@ services:
       - ./nginx/fastcgi.conf:/etc/nginx/fastcgi.conf
     ports:
       - 80:80
-      - 443:443
+      - 443:443 
     networks:
       - front
   php:
