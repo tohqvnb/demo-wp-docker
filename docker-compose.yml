@@ -2,7 +2,7 @@ version: '2'
 services:
   nginx:
     build: ./nginx
-    container_name: wordpress_nginx
+    container_name: wordpress_nginx1
     restart: always
     volumes:
       - .:/var/www/html/:rw
@@ -17,7 +17,7 @@ services:
   php1:
     # build: .
     image: wordpress:5.1.1-fpm-alpine
-    container_name: php
+    container_name: php1
     restart: always
     # ports:
     #   - 9000:9000
@@ -44,7 +44,7 @@ services:
       - NONCE_SALT=''
   nginx2:
     build: ./nginx
-    container_name: wordpress_nginx_2
+    container_name: wordpress_nginx2
     restart: always
     volumes:
       - ./source2:/var/www/html/:rw
@@ -59,7 +59,7 @@ services:
   php2:
     # build: .
     image: wordpress:5.1.1-fpm-alpine
-    container_name: php_2
+    container_name: php2
     restart: always
     # ports:
     #   - 9001:9000
