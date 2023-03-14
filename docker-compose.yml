@@ -42,7 +42,7 @@ services:
       - SECURE_AUTH_SALT=''
       - LOGGED_IN_SALT=''
       - NONCE_SALT=''
-  nginx:
+  nginx2:
     build: ./nginx
     container_name: wordpress_nginx_2
     restart: always
@@ -52,17 +52,17 @@ services:
       - ./nginx2/conf.d:/etc/nginx/conf.d
       - ./nginx2/fastcgi.conf:/etc/nginx/fastcgi.conf
     ports:
-      - 80:80
-      - 443:443 
+      - 81:80
+      - 444:443 
     networks:
       - front
-  php:
+  php2:
     # build: .
     image: wordpress:5.1.1-fpm-alpine
     container_name: php_2
     restart: always
     ports:
-      - 9000:9001
+      - 9001:9000
     volumes:
       - ./source2:/var/www/html:rw
       - ./php/upload.ini:/usr/local/etc/php/conf.d/uploads.ini
