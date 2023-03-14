@@ -14,13 +14,13 @@ services:
       - 443:443 
     networks:
       - front
-  php:
+  php1:
     # build: .
     image: wordpress:5.1.1-fpm-alpine
     container_name: php
     restart: always
-    ports:
-      - 9000:9000
+    # ports:
+    #   - 9000:9000
     volumes:
       - .:/var/www/html:rw
       - ./php/upload.ini:/usr/local/etc/php/conf.d/uploads.ini
@@ -61,8 +61,8 @@ services:
     image: wordpress:5.1.1-fpm-alpine
     container_name: php_2
     restart: always
-    ports:
-      - 9001:9000
+    # ports:
+    #   - 9001:9000
     volumes:
       - ./source2:/var/www/html:rw
       - ./php/upload.ini:/usr/local/etc/php/conf.d/uploads.ini
