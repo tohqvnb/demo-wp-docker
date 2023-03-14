@@ -42,6 +42,48 @@ services:
       - SECURE_AUTH_SALT=''
       - LOGGED_IN_SALT=''
       - NONCE_SALT=''
+  nginx:
+    build: ./nginx
+    container_name: wordpress_nginx_2
+    restart: always
+    volumes:
+      - ./source2:/var/www/html/:rw
+      - ./nginx2/conf/nginx.conf:/etc/nginx/conf/nginx.conf
+      - ./nginx2/conf.d:/etc/nginx/conf.d
+      - ./nginx2/fastcgi.conf:/etc/nginx/fastcgi.conf
+    ports:
+      - 80:80
+      - 443:443 
+    networks:
+      - front
+  php:
+    # build: .
+    image: wordpress:5.1.1-fpm-alpine
+    container_name: php_2
+    restart: always
+    ports:
+      - 9000:9001
+    volumes:
+      - ./source2:/var/www/html:rw
+      - ./php/upload.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ./php/php.ini:/usr/local/etc/php/php.ini
+    # depends_on:
+    #   - db
+    # links:
+    #   - db
+    environment:
+      - MYSQL_ADDON_DB=prod
+      - MYSQL_ADDON_HOST=vnbooking-aurora-instance-1.csryvbpszspz.ap-southeast-1.rds.amazonaws.com
+      - MYSQL_ADDON_USER=admin
+      - MYSQL_ADDON_PASSWORD=Vnbooking2023
+      - AUTH_KEY=''
+      - SECURE_AUTH_KEY=''
+      - LOGGED_IN_KEY=''
+      - NONCE_KEY=''
+      - AUTH_SALT=''
+      - SECURE_AUTH_SALT=''
+      - LOGGED_IN_SALT=''
+      - NONCE_SALT=''
     networks:
       - front
       - back
