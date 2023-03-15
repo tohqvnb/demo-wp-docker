@@ -100,10 +100,11 @@ services:
       - "443:443"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - /nginx/certs:/etc/nginx/certs
-
+      - ./nginx/certs:/etc/nginx/certs
     restart: always
     privileged: true
+    networks:
+      - front
   # db:
   #   image: mariadb:10
   #   container_name: wordpress_mariadb
