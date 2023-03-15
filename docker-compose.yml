@@ -9,9 +9,11 @@ services:
       - ./nginx/conf/nginx.conf:/etc/nginx/conf/nginx.conf
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/fastcgi.conf:/etc/nginx/fastcgi.conf
-    ports:
-      - 80:80
-      - 443:443 
+    # ports:
+    #   - 80:80
+    #   - 443:443 
+    environment:
+      VIRTUAL_HOST: squidhomestay.com
     networks:
       - front
   php1:
@@ -53,9 +55,11 @@ services:
       - ./nginx2/conf/nginx.conf:/etc/nginx/conf/nginx.conf
       - ./nginx2/conf.d:/etc/nginx/conf.d
       - ./nginx2/fastcgi.conf:/etc/nginx/fastcgi.conf
-    ports:
-      - 81:80
-      - 444:443 
+    environment:
+      VIRTUAL_HOST: amthucbuivien.com
+    # ports:
+    #   - 81:80
+    #   - 444:443 
     networks:
       - front
   php2:
@@ -88,6 +92,29 @@ services:
       - NONCE_SALT=''
     networks:
       - front
+
+  a:
+    build: a
+    environment:
+      VIRTUAL_HOST: a.domain.com
+    restart: always
+
+  b:
+    build: b
+    environment:
+      VIRTUAL_HOST:  b.domain.com
+    restart: always
+
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+    restart: always
+    privileged: true
   # db:
   #   image: mariadb:10
   #   container_name: wordpress_mariadb
