@@ -1,6 +1,6 @@
 version: '2'
 services:
-  nginx:
+  nginx1:
     build: ./nginx
     container_name: wordpress_nginx1
     restart: always
@@ -42,6 +42,8 @@ services:
       - SECURE_AUTH_SALT=''
       - LOGGED_IN_SALT=''
       - NONCE_SALT=''
+    networks:
+      - front
   nginx2:
     build: ./nginx
     container_name: wordpress_nginx2
@@ -86,7 +88,6 @@ services:
       - NONCE_SALT=''
     networks:
       - front
-      - back
   # db:
   #   image: mariadb:10
   #   container_name: wordpress_mariadb
